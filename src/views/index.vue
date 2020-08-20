@@ -422,7 +422,7 @@ export default {
     color white
     background-color #2d2c2c
   .toptitle
-    color red
+    color #F56C6C
     font-size 30px
     font-weight 800
     position absolute

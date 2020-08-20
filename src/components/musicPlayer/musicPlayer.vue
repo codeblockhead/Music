@@ -35,7 +35,8 @@
         </div>
         <i class="el-icon-caret-top" @click="showLyr"></i>
         <audio :src="playSong.url" ref="audio" autoplay @ended="ended" @canplay="getDuration"
-               @timeupdate="getCurrentTime"></audio>
+               @timeupdate="getCurrentTime"
+               controls></audio>
       </div>
 <!--      <div class="lyric" v-if="playSong.lyric.hasOwnProperty('lrc')">{{playSong.lyric.lrc.lyric}}</div>-->
     </div>

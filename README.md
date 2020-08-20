@@ -32,12 +32,11 @@
   下载后进入文件夹node app.js 启动
 ## 遇到的问题
 - ### 播放音乐
-最开始的时候，我知道肯定会用audio标签，建立了一个musicPlayer组件，然后把它固定在浏览器底部，因为有好几个页面都有音乐播放，所以我只能把音乐数据放在vuex里面统一管理，传给vuex的值都是可用数据了，每次只能播放一首歌，播放完后，就直接停止了，我应该在他的ended事件里面做些什么。逻辑是这样的
+最开始的时候，我知道肯定会用audio标签，建立了一个musicPlayer组件，然后把它固定在浏览器底部，刚开始使用的是$bus来进行组件间的通信,随着开发觉得这样不利于管理,于是我把音乐数据放在vuex里面统一管理，传给vuex的值都是可用数据了，每次只能播放一首歌，播放完后，就直接停止了，我应该在他的ended事件里面做些什么。逻辑是这样的
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516185345847.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hoeXh4aHducw==,size_16,color_FFFFFF,t_70)  
-大概吧，我真的不知道怎么表述了，反正数据，我都存在vuex里面了，
 总结：
 - 1.在actions里面可以调用mutation--------context.commit('事件类型','参数')，网络请求等异步操作，放在actions里面------------组件调用this.$store.dispatch('事件类型', '参数')
-- 2.mutations------组件调用this$store.commit('事件类型','参数')--vuex的store状态的更新唯一方式，注意不能在actions里直接修改state里的值，改是可以改的，不提倡，容易出问题
+- 2.mutations------组件调用this$store.commit('事件类型','参数')--vuex的store状态的更新唯一方式，注意不能在actions里直接修改state里的值，改是可以改的，不提倡
 - ### 路由跳转
 问题：elementui中的导航菜单，自带的:default-active="activeIndex"，他只有点击才有对应的效果，你要是选择了第二项，然后刷新，他就会自动跳到第一个上面，整个导航菜单就会乱掉
 
@@ -70,7 +69,7 @@
 - 2.使用时：通过JSON.parse()方法将字符串转换成JSON格式即可
 - ### v-model原理
 本质上是一个语法糖，通过@input事件+v-bind指令实现数据的双向绑定  
-<input v-model='testValue'> == <input :value="testValue" @input="testValue = $event.target.value">
+```<input v-model='testValue'> == <input :value="testValue" @input="testValue = $event.target.value">```
 - ### 使单行文字超过一定长度显示...
 - 1.规定元素的宽度  
        width: 200px;
