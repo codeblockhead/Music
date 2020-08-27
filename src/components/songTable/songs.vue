@@ -54,6 +54,10 @@ export default {
     }
   },
   methods: {
+    // async test (item) {
+    //   const res = await this.$http.get(`http://localhost:3000/song/url?id=+${item.album.id}`)
+    //   console.log(res)
+    // },
     // 播放歌曲
     play (id, index) {
       if (this.active === id) {

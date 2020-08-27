@@ -33,7 +33,22 @@
 ## 遇到的问题
 - ### 播放音乐
 最开始的时候，我知道肯定会用audio标签，建立了一个musicPlayer组件，然后把它固定在浏览器底部，刚开始使用的是$bus来进行组件间的通信,随着开发觉得这样不利于管理,于是我把音乐数据放在vuex里面统一管理，传给vuex的值都是可用数据了，每次只能播放一首歌，播放完后，就直接停止了，我应该在他的ended事件里面做些什么。逻辑是这样的
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516185345847.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hoeXh4aHducw==,size_16,color_FFFFFF,t_70)  
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200516185345847.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hoeXh4aHducw==,size_16,color_FFFFFF,t_70) 
+
+1.修改element ui样式
+使用深度选择器 /deep/
+2.使用 ui时,导航栏不会发生路由跳转
+click只有点击以后才会触发效果,因为ui自带active name,所以改用watch监听,结合handler和immediate属性
+
+3.搜索栏只有第一次点回车可以搜索出结果,第二次结果不变
+原因:是我把数据请求放在了created函数中,只有当result刚刚被创建时才会触发created函数,第二次只是修改了query的参数值,组件没有被创建,
+解决办法: 监听$route变化,如果路由发生了变化,重新请求一次	
+4.第一次搜索完之后,点击播放任何一首音乐,都无法播放,只有点击第二次才能播放
+原因: 是vuex中刚创建搜索组件时,没有创建该歌曲列表的state,只有点击一首歌曲的时候才会触发事件给state赋值,于是我首先想到用await阻塞dispatch后再判断有没有url,还是拿不到url,所以我再created函数中先把歌曲列表传入解决了问题
+
+5.设置随机播放按钮的时候,思路是设置了一个工具类用来打乱playList,因为currentSong是通过playList和currentIndex决定,所以点击随机播放按钮歌曲会跳转到另一首歌,所以要在点击按钮改变前重新找到歌曲并commit一次currentIndex和currentSong
+
+6.暂停下切换模式歌曲会继续播放,因为我用了监听器,当currentSong改变时,用play()播放歌曲,第五点中我重新设置了playList和currentIndex,playList被打乱时内存地址已经发生了变化,currentSong由playList和currentIndex决定,所以这个currentSong也会被监听到变化
 总结：
 - 1.在actions里面可以调用mutation--------context.commit('事件类型','参数')，网络请求等异步操作，放在actions里面------------组件调用this.$store.dispatch('事件类型', '参数')
 - 2.mutations------组件调用this$store.commit('事件类型','参数')--vuex的store状态的更新唯一方式，注意不能在actions里直接修改state里的值，改是可以改的，不提倡
