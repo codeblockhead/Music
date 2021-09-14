@@ -17,7 +17,7 @@ const myMusic = () => import('../views/myMusic/myMusic')
 
 Vue.use(VueRouter)
 
-
+// test
 const routes = [
   {
     path: '/',
