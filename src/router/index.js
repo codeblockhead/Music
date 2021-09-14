@@ -14,7 +14,7 @@ const videos = () => import('../views/mv/videos')
 const latest = () => import('../views/latest/latest')
 const highQuality = () => import('../views/songMenu/highquality/highquality')
 const myMusic = () => import('../views/myMusic/myMusic')
-
+// test
 Vue.use(VueRouter)
 
 const routes = [
